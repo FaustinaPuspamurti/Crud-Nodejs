@@ -1,7 +1,8 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+var mysql = require('mysql2');
+require('dotenv').config();
 const path = require('path');
 const expressValidator = require('express-validator');
 var connection = require('express-myconnection');
@@ -20,19 +21,19 @@ const port = 3000;
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'socka'
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER, // your mysql user
+    password : process.env.MYSQLPASSWORD, // your mysql password
+    database:process.env.MYSQLDATABASE // your database name
 });
 
 app.use(
     connection(mysql, {
-        host: 'localhost',
-        user: 'root', // your mysql user
-        password: '', // your mysql password
-        port: 3306, //port mysql
-        database: 'socka' // your database name
+        host: process.env.MYSQLHOST,
+        user: process.env.MYSQLUSER, // your mysql user
+        password : process.env.MYSQLPASSWORD, // your mysql password
+        port : process.env.MYSQLPORT, //port mysql
+        database:process.env.MYSQLDATABASE // your database name
     }, 'pool') //or single
 
 );
